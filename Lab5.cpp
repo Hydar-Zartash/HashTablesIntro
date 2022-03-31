@@ -24,12 +24,12 @@ int main()
     tht.testIsInQuad(totalMark, fullMark);
 
     tht.testSimProbeSuccessLin(totalMark, fullMark);
-    tht.testSimProbeSuccessQuad(totalMark, fullMark);
+   //tht.testSimProbeSuccessQuad(totalMark, fullMark);
     tht.testSimProbeUnsuccessLinBonus(bonusTotalMark, bonusFullMark);
 
     cout << "********************************" << endl;
     cout << "*** FINAL TOTAL MARK IS " << totalMark << "/" << fullMark << " ***" << endl;
-    cout << "*** FINAL BONUS MARK IS " << bonusTotalMark << "/" << bonusFullMark << " ***" << endl;
+    cout << "*** FINAL BONUS MARK IS " << bonusTotalMark +<< "/" << bonusFullMark << " ***" << endl;
     cout << "********************************" << endl;
 
 	return 0;

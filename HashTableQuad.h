@@ -10,8 +10,13 @@ private:
 	std::vector<int> table;
 	// define other private fields to store:
 	// 1. the size of the table
+	int size;
+	
 	// 2. the number of keys stored in the table
+	int numKeys;
+	int maxKeys;
 	// 3. the maximum load factor allowed
+	double maxLoad;
 
 public:
 	// required constructor
@@ -25,6 +30,8 @@ public:
 	int getNumKeys();
 	int getTableSize();
 	double getMaxLoadFactor();
+	bool isPrime(int n);
+	int probing(int n);
 	static std::vector<double> simProbeSuccess();
 
 	// used for testing

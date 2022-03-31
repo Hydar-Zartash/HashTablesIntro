@@ -10,9 +10,12 @@ private:
 	std::vector<int> table;
 	// define other private fields to store:
 	// 1. the size of the table
+	int size;
 	// 2. the number of keys stored in the table
+	int numKeys;
+	int maxKeys;
 	// 3. the maximum load factor allowed
-
+	double maxLoad;
 public:
 	// required constructor
 	HashTableLin(int maxNum, double load);
@@ -22,9 +25,11 @@ public:
 	bool isIn(int n);
 	void printKeys();
 	void printKeysAndIndexes();
+	int isPrime(int n);
 	int getNumKeys();
 	int getTableSize();
 	double getMaxLoadFactor();
+	int probing(int n);
 	static std::vector<double> simProbeSuccess();
 	static std::vector<double> simProbeUnsuccess(); // for bonus
 
