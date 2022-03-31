@@ -2,10 +2,10 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
-#include <iostream>
+#include <algorithm>
 using namespace std;
 
-HashTableLin::HashTableLin(int maxNum, double load)
+HashTableLin::HashTableLin(int maxNum, double load) //O(n^2) time, O(1) space
 {
     size = maxNum / load;
     double d = maxNum / load;
@@ -23,14 +23,14 @@ HashTableLin::HashTableLin(int maxNum, double load)
 
 }
 
-void HashTableLin::insert(int n)
+void HashTableLin::insert(int n) //O(n^2) time (rehash) O(n) otherwise, O(1) space
 {
-
+    
     if(!isIn(n)){
 
         
         ++numKeys;
-        if(maxKeys < numKeys){rehash();}
+        if(maxKeys < numKeys){rehash();} // only n^2 if rehashing 
         int index = n%size;
         if(table[index]==NULL){table[index] = n;}
         else{
@@ -40,7 +40,7 @@ void HashTableLin::insert(int n)
 
     }
 }
-int HashTableLin::isPrime(int n){
+int HashTableLin::isPrime(int n){////O(n) time, O(1) space
 
     for(int i = 2; i < n; i++){
         if(n%i==0){
@@ -52,7 +52,7 @@ int HashTableLin::isPrime(int n){
 
 
 
-void HashTableLin::rehash()
+void HashTableLin::rehash() //O(n^2) time, O(1) space
 {
     size = size* 2 + 1;
     maxKeys = size * maxLoad;
@@ -66,9 +66,9 @@ void HashTableLin::rehash()
         if(tCopy[x] != NULL){insert(tCopy[x]);}
     }
 }
-bool HashTableLin::isIn(int n)
+bool HashTableLin::isIn(int n) //O(n) WORST CASE time, O(1) space
 {
-    int index = n %size;
+    int index = n %size;//
     while(table[index] != NULL){
         if(table[index] == n){
             return true;
@@ -81,7 +81,7 @@ bool HashTableLin::isIn(int n)
     return false;
 }
 
-void HashTableLin::printKeys()
+void HashTableLin::printKeys()//O(n) time, O(1) space
 {
     for(int x = 0; x < size; x++){
         if(table[x] != NULL){
@@ -90,7 +90,7 @@ void HashTableLin::printKeys()
     }
 }
 
-void HashTableLin::printKeysAndIndexes()
+void HashTableLin::printKeysAndIndexes()//O(n) time, O(1) space
 {
     for(int x = 0; x < size; x++){
         if(table[x] != NULL){
@@ -99,22 +99,22 @@ void HashTableLin::printKeysAndIndexes()
     }
 }
 
-int HashTableLin::getNumKeys() {
+int HashTableLin::getNumKeys() {//O(1) time, O(1) space
 	// TODO, change following code after completing this function
     return numKeys;
 }
 
-int HashTableLin::getTableSize() {
+int HashTableLin::getTableSize() {//O(1) time, O(1) space
 	// TODO, change following code after completing this function
     return size;
 }
 
-double HashTableLin::getMaxLoadFactor() {
+double HashTableLin::getMaxLoadFactor() {//O(1) time, O(1) space
 	// TODO, change following code after completing this function
     return maxLoad;
 }
 
-int  HashTableLin::probing(int n)
+int  HashTableLin::insertCount(int n)////O(n^2) time, O(1) space
 {
     int p = 0;
     if(!isIn(n)){
@@ -129,11 +129,12 @@ int  HashTableLin::probing(int n)
             p++;
         }else{
             while(table[x] != NULL){
-
-                p++;
                 x = (x+1)%size;
+                p++;
+
             }
             table[x] = n;
+            p++;
             
         }
 
@@ -141,10 +142,10 @@ int  HashTableLin::probing(int n)
     return p;
 }
 
-std::vector<double> HashTableLin::simProbeSuccess()
-{
+std::vector<double> HashTableLin::simProbeSuccess()//
+
     {
-    // TODO, change following code after completing this function
+
     vector<double> result(9);
     int maximum = 100000; //at least 100k
     int randoms[100000];
@@ -171,11 +172,10 @@ std::vector<double> HashTableLin::simProbeSuccess()
 
     for(double l = 0.1; l <= 0.9; l+=.1){
         sum = 0;
-        cout<<"\n";
         for(int x = 0; x < 100; x++){
             HashTableLin hT = HashTableLin(maximum, l);
             for(int y = 0; y < ssize; y++){
-                sum += (double)hT.probing(randoms[y])/ssize;
+                sum += (double)hT.insertCount(randoms[y])/ssize;
             }
         }
         probeMean = sum/100;

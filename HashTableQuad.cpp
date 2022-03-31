@@ -5,7 +5,7 @@
 #include <stdlib.h>
 using namespace std;
 
-HashTableQuad::HashTableQuad(int maxNum, double load)
+HashTableQuad::HashTableQuad(int maxNum, double load)//n^2 time, constant space
 {
     size = maxNum / load;
     double d = maxNum / load;
@@ -23,7 +23,7 @@ HashTableQuad::HashTableQuad(int maxNum, double load)
 
 }
 
-bool HashTableQuad::isPrime(int n){
+bool HashTableQuad::isPrime(int n){ 
     for(int i = 2; i < n; i++){
         if(n%i==0){
             return false;
@@ -32,7 +32,7 @@ bool HashTableQuad::isPrime(int n){
     return true;
 }
 
-void HashTableQuad::insert(int n)
+void HashTableQuad::insert(int n) //O(n^2) rehash O(n) otherwise
 {
     int c = 1; 
     if(!isIn(n)){
@@ -57,7 +57,7 @@ void HashTableQuad::insert(int n)
 
 }
 
-void HashTableQuad::rehash()
+void HashTableQuad::rehash()// n^2
 {
     size = size* 2 + 1;
     maxKeys = size * maxLoad;
@@ -73,7 +73,7 @@ void HashTableQuad::rehash()
     
 }
 
-bool HashTableQuad::isIn(int n)
+bool HashTableQuad::isIn(int n) //n 
 {
     int c = 1;
     int index = n %size;
@@ -89,7 +89,7 @@ bool HashTableQuad::isIn(int n)
     return false;
 }
 
-void HashTableQuad::printKeys()
+void HashTableQuad::printKeys() //n time
 {
     for(int x = 0; x < size; x++){
         if(table[x] != NULL){
@@ -98,7 +98,7 @@ void HashTableQuad::printKeys()
     }
 }
 
-void HashTableQuad::printKeysAndIndexes()
+void HashTableQuad::printKeysAndIndexes() // n time
 {
     for(int x = 0; x < size; x++){
         if(table[x] != NULL){
@@ -107,22 +107,22 @@ void HashTableQuad::printKeysAndIndexes()
     }
 }
 
-int HashTableQuad::getNumKeys() {
+int HashTableQuad::getNumKeys() { //1 time
 	// TODO, change following code after completing this function
     return numKeys;
 }
 
-int HashTableQuad::getTableSize() {
+int HashTableQuad::getTableSize() {//1 time
 	// TODO, change following code after completing this function
     return size;
 }
 
-double HashTableQuad::getMaxLoadFactor() {
+double HashTableQuad::getMaxLoadFactor() {// 1 time
 	// TODO, change following code after completing this function
     return maxLoad;
 }
 
-int  HashTableQuad::probing(int n)
+int  HashTableQuad::insertCount(int n) //O(n^2) O(n) otherwise
 {
     int p = 0;int c = 1;
     if(!isIn(n)){
@@ -179,14 +179,13 @@ std::vector<double> HashTableQuad::simProbeSuccess()
 
     for(double l = 0.1; l <= 0.9; l+=.1){
         sum = 0;
-        cout<<"\n";
-        for(int x = 0; x < 100; x++){
+        for(int x = 0; x < 200; x++){
             HashTableQuad hT = HashTableQuad(maximum, l);
             for(int y = 0; y < ssize; y++){
-                sum += (double)hT.probing(randoms[y])/ssize;
+                sum += (double)hT.insertCount(randoms[y])/ssize;
             }
         }
-        probeMean = sum/100;
+        probeMean = sum/200;
         result[c] = probeMean;
         c++;
     }

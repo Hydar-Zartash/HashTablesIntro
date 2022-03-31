@@ -31,7 +31,7 @@ public:
 	int getTableSize();
 	double getMaxLoadFactor();
 	bool isPrime(int n);
-	int probing(int n);
+	int insertCount(int n);
 	static std::vector<double> simProbeSuccess();
 
 	// used for testing

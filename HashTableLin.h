@@ -29,7 +29,7 @@ public:
 	int getNumKeys();
 	int getTableSize();
 	double getMaxLoadFactor();
-	int probing(int n);
+	int insertCount(int n);
 	static std::vector<double> simProbeSuccess();
 	static std::vector<double> simProbeUnsuccess(); // for bonus
 
